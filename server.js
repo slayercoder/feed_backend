@@ -12,35 +12,34 @@ const parser = require("rss-parser");
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
 const Feed = require("./models/schemas/feedSchema");
-const mongodb = require("mongodb");
+// const mongodb = require("mongodb");
 mongoose.connect("mongodb://localhost/appDb");
 
 // application middlewares
 app.use(morgan("dev"));
 
+    parser.parseURL("http://www.toptal.com/blog.rss", function(err,parsed){
 
-setInterval(function(){
-    
-        parser.parseURL("http://www.toptal.com/blog.rss", function(err,parsed){
-            
-            
-                for(var i = 0; i < len - documentCount; i++){
+                var len = parsed.feed.entries.length;
+                var item = parsed.feed.entries;
+                for(var i = 0; i < len; i++){
                     var entry = new Feed({
-                        title : item.title,
-                        description : item.content,
-                        date : item.pubDate,
-                        link : item.link,
-                        creator : item.creator,
+                        title : item[i].title,
+                        description : item[i].content,
+                        date : item[i].pubDate,
+                        link : item[i].link,
+                        creator : item[i].creator,
                         category : "nodejs"
                     });
                     entry.save(function(err){
                         if(err) throw err;
                         console.log("feed added");
-                    });                 
+                    });
+                                     
                 }
             });
 
-},172800000);
+    
 
 
 
