@@ -56,22 +56,25 @@ app.get("/", function(req,res){
                             
                             else{
                                 for(var i = 0; i < len; i++){
-                                    Nodejs.find({"title" : item[i].title}, function(err, x){
-                                        if(err){
-                                            var entry = new Nodejs({
-                                                title : item[i].title,
-                                                description : item[i].content,
-                                                date : item[i].pubDate,
-                                                link : item[i].link,
-                                                creator : item[i].creator,
-                                                category : "nodejs"
-                                            });
-                                            entry.save(function(e){
-                                                if(e) throw e;
-                                                console.log("feed added");
-                                            });
-                                        }
-                                    });
+                                    var regex = /https:\/\/www.toptal.com\/nodejs/;
+                                    if(regex.test(item[i].link)){
+                                        Nodejs.find({"title" : item[i].title}, function(err, x){
+                                            if(err){
+                                                var entry = new Nodejs({
+                                                    title : item[i].title,
+                                                    description : item[i].content,
+                                                    date : item[i].pubDate,
+                                                    link : item[i].link,
+                                                    creator : item[i].creator,
+                                                    category : "nodejs"
+                                                });
+                                                entry.save(function(e){
+                                                    if(e) throw e;
+                                                    console.log("feed added");
+                                                });
+                                            }
+                                        });
+                                    }
                                 }
                                 res.end();            
                             }                                
