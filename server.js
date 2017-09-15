@@ -12,12 +12,12 @@ const parser = require("rss-parser");
 
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
-const Nodejs = require("./models/schemas/feedSchema");
+const Nodejs = require("./models/schemas/Nodejs");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
 // database connection errors
 db.on("error", function(){
-    console.log(err);
+    console.log("error");
 });
 db.once("open", function(){
     console.log("connected to database");
@@ -35,18 +35,21 @@ app.get("/", function(req,res){
                         Nodejs.count({}, function(err,num){
                             if(num === 0){
                                 for(var i = 0; i < len; i++){
-                                    var entry = new Nodejs({
-                                        title : item[i].title,
-                                        description : item[i].content,
-                                        date : item[i].pubDate,
-                                        link : item[i].link,
-                                        creator : item[i].creator,
-                                        category : "nodejs"
-                                    });
-                                    entry.save(function(e){
-                                        if(e) throw e;
-                                        console.log("feed added");
-                                    });
+                                    var regex = /https:\/\/www.toptal.com\/nodejs/;
+                                    if(regex.test(item[i].link)){
+                                        var entry = new Nodejs({
+                                            title : item[i].title,
+                                            description : item[i].content,
+                                            date : item[i].pubDate,
+                                            link : item[i].link,
+                                            creator : item[i].creator,
+                                            category : "nodejs"
+                                        });
+                                        entry.save(function(e){
+                                            if(e) throw e;
+                                            console.log("feed added");
+                                        });
+                                    }
                                 }
                                 res.end();
                             }
