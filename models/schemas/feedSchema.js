@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var feedSchema = new Schema({
+var Nodejs = new Schema({
     title : {type : String, required : true },
     description : {type : String, required : true},
     date : {type : Date},
@@ -12,6 +12,6 @@ var feedSchema = new Schema({
 });
 
 
-var Feed = mongoose.model("Feed", feedSchema);
+var Nodejs = mongoose.model("node", Nodejs);
 
-module.exports = Feed;
+module.exports = Nodejs;

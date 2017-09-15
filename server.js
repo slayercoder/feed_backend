@@ -12,22 +12,30 @@ const parser = require("rss-parser");
 
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
-const Feed = require("./models/schemas/feedSchema");
-const db = mongoose.connection;
+const Nodejs = require("./models/schemas/feedSchema");
 mongoose.connect("mongodb://localhost/appDb");
+const db = mongoose.connection;
+// database connection errors
+db.on("error", function(){
+    console.log(err);
+});
+db.once("open", function(){
+    console.log("connected to database");
+});
+
+
 // application middlewares
 app.use(morgan("dev"));
 
 app.get("/", function(req,res){
-    parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
-        
+    
+    parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){       
                         var len = parsed.feed.entries.length;
                         var item = parsed.feed.entries;
-                        
-                        for(var i = 0; i < len; i++){
-                            Feed.find({"title" : item[i].title}, function(err, x){
-                                if(err){
-                                    var entry = new Feed({
+                        Nodejs.count({}, function(err,num){
+                            if(num === 0){
+                                for(var i = 0; i < len; i++){
+                                    var entry = new Nodejs({
                                         title : item[i].title,
                                         description : item[i].content,
                                         date : item[i].pubDate,
@@ -40,16 +48,40 @@ app.get("/", function(req,res){
                                         console.log("feed added");
                                     });
                                 }
-                            });
-                        }
-                        res.end();
+                                res.end();
+                          
+                            }
+                            
+                            else{
+                                for(var i = 0; i < len; i++){
+                                    Nodejs.find({"title" : item[i].title}, function(err, x){
+                                        if(err){
+                                            var entry = new Nodejs({
+                                                title : item[i].title,
+                                                description : item[i].content,
+                                                date : item[i].pubDate,
+                                                link : item[i].link,
+                                                creator : item[i].creator,
+                                                category : "nodejs"
+                                            });
+                                            entry.save(function(e){
+                                                if(e) throw e;
+                                                console.log("feed added");
+                                            });
+                                        }
+                                    });
+                                }
+                                res.end();            
+                            }                                
+                        });
                     });
-});
+                        
+    });
 
     
 
 app.get("/find", function(req,res){
-    Feed.find({"title" : "A Step-by-step Guide to Creating Animated Product Explainer Videos"}, function(err, data){
+    Nodejs.find({"title" : "A Step-by-step Guide to Creating Animated Product Explainer Videos"}, function(err, data){
         res.json(data);
     });
 });
