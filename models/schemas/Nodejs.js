@@ -7,7 +7,7 @@ var Nodejs = new Schema({
     date : {type : Date},
     link : {type : String, required : true},
     creator : {type : String, required : true},
-    // media_url : {type : String, required : true},
+    media_url : {type : String, required : true},
     category : {type : String, required : true}
 });
 

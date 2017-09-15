@@ -43,6 +43,7 @@ app.get("/", function(req,res){
                                             date : item[i].pubDate,
                                             link : item[i].link,
                                             creator : item[i].creator,
+                                            media_url : "www.image.com/image.jpg",
                                             category : "nodejs"
                                         });
                                         entry.save(function(e){
@@ -66,6 +67,7 @@ app.get("/", function(req,res){
                                                     date : item[i].pubDate,
                                                     link : item[i].link,
                                                     creator : item[i].creator,
+                                                    media_url : "www.image.com/image.jpg",
                                                     category : "nodejs"
                                                 });
                                                 entry.save(function(e){
