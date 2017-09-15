@@ -49,7 +49,6 @@ app.get("/", function(req,res){
                                     });
                                 }
                                 res.end();
-                          
                             }
                             
                             else{
@@ -83,6 +82,12 @@ app.get("/", function(req,res){
 app.get("/find", function(req,res){
     Nodejs.find({"title" : "A Step-by-step Guide to Creating Animated Product Explainer Videos"}, function(err, data){
         res.json(data);
+    });
+});
+
+app.get("/count", function(req,res){
+    Nodejs.count({}, function(err,cnt){
+        res.json(cnt);
     });
 });
 
