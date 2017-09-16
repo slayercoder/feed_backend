@@ -15,10 +15,12 @@ const mongoose = require("mongoose");
 const Nodejs = require("./models/schemas/Nodejs");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
+
 // database connection errors
 db.on("error", function(){
     console.log("error");
 });
+
 db.once("open", function(){
     console.log("connected to database");
 });
@@ -87,8 +89,8 @@ app.get("/", function(req,res){
 
     
 
-app.get("/find", function(req,res){
-    Nodejs.find({"title" : "A Step-by-step Guide to Creating Animated Product Explainer Videos"}, function(err, data){
+app.get("/nodejs", function(req,res){
+    Nodejs.find({"category" : "nodejs"}, function(err, data){
         res.json(data);
     });
 });
@@ -98,6 +100,7 @@ app.get("/count", function(req,res){
         res.json(cnt);
     });
 });
+
 
 
 
