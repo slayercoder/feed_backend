@@ -8,7 +8,8 @@ const port = process.env.PORT || config.port;
 // third party modules
 const morgan = require("morgan");
 const async = require("async");
-const parser = require("rss-parser");
+// const parser = require("rss-parser");
+const parser = require(rss-to-json);
 
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
@@ -33,11 +34,11 @@ app.use(function(req,res,next){
     res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers','Content-Type');
     next();
-})
+});
 
 app.get("/", function(req,res){
     
-    parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){       
+    parser.Load("http://www.toptal.com/blog.rss", function(error,parsed){       
                         var len = parsed.feed.entries.length;
                         var item = parsed.feed.entries;
                         Nodejs.count({}, function(err,num){
