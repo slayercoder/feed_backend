@@ -15,6 +15,7 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
 const Nodejs = require("./models/schemas/Nodejs");
+const Devops = require("./models/schemas/Devops");
 // database connection errors
 db.on("error", function(){
     console.log("error");
@@ -56,7 +57,9 @@ app.get("/feeds/devops", function(req,res){
 });
 
 app.get("/count", function(req,res){
+    var tot = 0;
     Nodejs.count({}, function(err,cnt){
+        tot += cnt;
         res.json(cnt);
     });
 });
