@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var Nodejs = new Schema({
+var Devops = new Schema({
     title : {type : String, required : true },
     description : {type : String, required : true},
     date : {type : Date},
@@ -11,7 +11,6 @@ var Nodejs = new Schema({
     category : {type : String, required : true}
 });
 
+var Devops_model = mongoose.model("devops", Devops);
 
-var Nodejs_model = mongoose.model("node", Nodejs);
-
-module.exports = Nodejs_model;
+module.exports = Devops_model;

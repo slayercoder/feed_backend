@@ -12,7 +12,6 @@ const parser = require("rss-parser");
 
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
-const Nodejs = require("./models/schemas/Nodejs");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
 
@@ -25,6 +24,9 @@ db.once("open", function(){
     console.log("connected to database");
 });
 
+// categories function imports
+const Node_Category = require("./feed-function/nodejs_function");
+const Devops_Category = require("./feed-function/devops_function");
 
 // application middlewares
 app.use(morgan("dev"));
@@ -36,66 +38,12 @@ app.use(function(req,res,next){
 });
 
 app.get("/", function(req,res){
-    
-    parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){       
-                        var len = parsed.feed.entries.length;
-                        var item = parsed.feed.entries;
-                        Nodejs.count({}, function(err,num){
-                            if(num === 0){
-                                for(var i = 0; i < len; i++){
-                                    var regex = /https:\/\/www.toptal.com\/nodejs/;
-                                    if(regex.test(item[i].link)){
-                                        var entry = new Nodejs({
-                                            title : item[i].title,
-                                            description : item[i].content,
-                                            date : item[i].pubDate,
-                                            link : item[i].link,
-                                            creator : item[i].creator,
-                                            media_url : "www.image.com/image.jpg",
-                                            category : "nodejs"
-                                        });
-                                        entry.save(function(e){
-                                            if(e) throw e;
-                                            console.log("feed added");
-                                        });
-                                    }
-                                }
-                                res.end();
-                            }
-                            
-                            else{
-                                for(var i = 0; i < len; i++){
-                                    var regex = /https:\/\/www.toptal.com\/nodejs/;
-                                    if(regex.test(item[i].link)){
-                                        Nodejs.find({"title" : item[i].title}, function(err, x){
-                                            if(err){
-                                                var entry = new Nodejs({
-                                                    title : item[i].title,
-                                                    description : item[i].content,
-                                                    date : item[i].pubDate,
-                                                    link : item[i].link,
-                                                    creator : item[i].creator,
-                                                    media_url : "www.image.com/image.jpg",
-                                                    category : "nodejs"
-                                                });
-                                                entry.save(function(e){
-                                                    if(e) throw e;
-                                                    console.log("feed added");
-                                                });
-                                            }
-                                        });
-                                    }
-                                }
-                                res.end();            
-                            }                                
-                        });
-                    });
-                        
-    });
+            Node_Category();
+            Devops_Category();
+});
 
-    
-
-app.get("/nodejs", function(req,res){
+    // here similar code as above will come for different collections 
+app.get("/feeds/nodejs", function(req,res){
     Nodejs.find({"category" : "nodejs"}, function(err, data){
         res.json(data);
     });
@@ -113,3 +61,10 @@ app.get("/count", function(req,res){
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
 });
+
+
+
+
+
+
+/***************************Commented_Code***************************/
