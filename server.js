@@ -14,7 +14,7 @@ const parser = require("rss-parser");
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
-
+const Nodejs = require("./models/schemas/Nodejs");
 // database connection errors
 db.on("error", function(){
     console.log("error");
@@ -37,14 +37,20 @@ app.use(function(req,res,next){
     next();
 });
 
+// multiple feed category calls
 app.get("/", function(req,res){
             Node_Category();
             Devops_Category();
 });
-
-    // here similar code as above will come for different collections 
+ 
 app.get("/feeds/nodejs", function(req,res){
     Nodejs.find({"category" : "nodejs"}, function(err, data){
+        res.json(data);
+    });
+});
+
+app.get("/feeds/devops", function(req,res){
+    Devops.find({"category" : "devops"}, function(err, data){
         res.json(data);
     });
 });
