@@ -5,6 +5,7 @@ const path = require("path");
 const config = require('./models/config.js');
 const port = process.env.PORT || config.port;
 const router = require("./app/routes");
+
 // third party modules
 const morgan = require("morgan");
 const async = require("async");
@@ -15,7 +16,7 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/appDb");
 const db = mongoose.connection;
 
-// database connection errors
+// database connection
 db.on("error", function(){
     console.log("error");
 });
@@ -33,7 +34,7 @@ app.use(function(req,res,next){
     next();
 });
 
-app.use("/",router); 
+app.use("/", router); 
 
 app.listen(port, function(){
     console.log(`Server running on port ${port}`);
