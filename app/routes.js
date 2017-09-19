@@ -30,7 +30,7 @@ router.get("/feeds/devops", function(req,res){
 router.get("/count", function(req,res){
     var total = 0;
     Nodejs_model.count({}, function(err,cnt){
-        tot += cnt;
+        total += cnt;
         Devops_model.count({}, function(err,cnt){
             total += cnt;
             res.json(total);
