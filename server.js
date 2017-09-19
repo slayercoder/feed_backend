@@ -18,15 +18,17 @@ const db = mongoose.connection;
 
 // database connection
 db.on("error", function(){
-    console.log("error");
+    console.log("Error in connecting to database, database server might not be running!!");
 });
 
 db.once("open", function(){
-    console.log("connected to database");
+    console.log("Succesfully connected to database");
 });
 
 // application middlewares
 app.use(morgan("dev"));
+
+// for Cross Origin Resource Sharing issue (CORS)
 app.use(function(req,res,next){
     res.header('Access-Control-Allow-Origin','*');
     res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');

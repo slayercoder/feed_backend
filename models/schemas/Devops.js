@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var Devops = new Schema({
+var Devops_schema = new Schema({
     title : {type : String, required : true },
     description : {type : String, required : true},
     date : {type : Date},
@@ -11,6 +11,6 @@ var Devops = new Schema({
     category : {type : String, required : true}
 });
 
-var Devops_model = mongoose.model("devops", Devops);
+var Devops_model = mongoose.model("devops", Devops_schema);
 
 module.exports = Devops_model;
