@@ -15,6 +15,17 @@ router.get("/", function(req,res){
     Function_for_fetching_Devops_feeds();
 });
 
+router.get("/feeds",function(req,res){
+    var feeds = [];
+    Nodejs_model.find({"category" : "nodejs"}, function(err, data){
+       feeds = feeds.concat(data);
+        Devops_model.find({"category" : "devops"}, function(err, data){
+            feeds = feeds.concat(data);
+            res.json(feeds)
+        });
+    });   
+});
+
 router.get("/feeds/nodejs", function(req,res){
     Nodejs_model.find({"category" : "nodejs"}, function(err, data){
         res.json(data);
