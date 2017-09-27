@@ -72,24 +72,21 @@ function Function_for_fetching_Devops_feeds(){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
                 for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err,x){
-                        if(err){
-                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
-                                var entry = new Devops_model({
-                                    title : item[i].title,
-                                    description : item[i].content,
-                                    date : item[i].pubDate,
-                                    link : item[i].link,
-                                    creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
-                                    category : "devops"
-                                });
-                                entry.save(function(e){
-                                    if(e) throw e;
-                                    console.log("feeds added from devops.com");
-                                });
-                            }
-                            
+                    Devops_model.find({"title" : item[i].title}, function(err,searchedItem){
+                        if(searchedItem.length === 0){
+                            var entry = new Devops_model({
+                                title : item[i].title,
+                                description : item[i].content,
+                                date : item[i].pubDate,
+                                link : item[i].link,
+                                creator : item[i].creator,
+                                media_url : "www.image.com/image.jpg",
+                                category : "devops"
+                            });
+                            entry.save(function(e){
+                                if(e) throw e;
+                                console.log("feeds added from devops.com");
+                            });
                         }
                     });
 
@@ -100,23 +97,21 @@ function Function_for_fetching_Devops_feeds(){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
                 for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err,x){
-                        if(err){
-                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
-                                var entry = new Devops_model({
-                                    title : item[i].title,
-                                    description : item[i].contentSnippet,
-                                    date : item[i].pubDate,
-                                    link : item[i].link,
-                                    creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
-                                    category : "devops"
-                                });
-                                entry.save(function(e){
-                                    if(e) throw e;
-                                    console.log("feeds added from devops.com");
-                                });                
-                            }
+                    Devops_model.find({"title" : item[i].title}, function(err,searchedItem){
+                        if(searchedItem.length === 0){
+                            var entry = new Devops_model({
+                                title : item[i].title,
+                                description : item[i].contentSnippet,
+                                date : item[i].pubDate,
+                                link : item[i].link,
+                                creator : item[i].creator,
+                                media_url : "www.image.com/image.jpg",
+                                category : "devops"
+                            });
+                            entry.save(function(e){
+                                if(e) throw e;
+                                console.log("feeds added from devops.com");
+                            });                
                         }
                     });
                     
@@ -127,23 +122,21 @@ function Function_for_fetching_Devops_feeds(){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
                 for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err, x){
-                        if(err){
-                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
-                                var entry = new Devops_model({
-                                    title : item[i].title,
-                                    description : item[i].contentSnippet,
-                                    date : item[i].pubDate,
-                                    link : item[i].link,
-                                    creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
-                                    category : "devops"
-                                });
-                                entry.save(function(e){
-                                    if(e) throw e;
-                                    console.log("feed added from devops guys");
-                                });
-                            }
+                    Devops_model.find({"title" : item[i].title}, function(err, searchedItem){
+                        if(searchedItem.length === 0){
+                            var entry = new Devops_model({
+                                title : item[i].title,
+                                description : item[i].contentSnippet,
+                                date : item[i].pubDate,
+                                link : item[i].link,
+                                creator : item[i].creator,
+                                media_url : "www.image.com/image.jpg",
+                                category : "devops"
+                            });
+                            entry.save(function(e){
+                                if(e) throw e;
+                                console.log("feed added from devops guys");
+                            });
                         }
                     });
                         
