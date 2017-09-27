@@ -74,19 +74,22 @@ function Function_for_fetching_Devops_feeds(){
                 for(var i = 0; i < len; i++){
                     Devops_model.find({"title" : item[i].title}, function(err,x){
                         if(err){
-                            var entry = new Devops_model({
-                                title : item[i].title,
-                                description : item[i].content,
-                                date : item[i].pubDate,
-                                link : item[i].link,
-                                creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
-                                category : "devops"
-                            });
-                            entry.save(function(e){
-                                if(e) throw e;
-                                console.log("feeds added from devops.com");
-                            });
+                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
+                                var entry = new Devops_model({
+                                    title : item[i].title,
+                                    description : item[i].content,
+                                    date : item[i].pubDate,
+                                    link : item[i].link,
+                                    creator : item[i].creator,
+                                    media_url : "www.image.com/image.jpg",
+                                    category : "devops"
+                                });
+                                entry.save(function(e){
+                                    if(e) throw e;
+                                    console.log("feeds added from devops.com");
+                                });
+                            }
+                            
                         }
                     });
 
@@ -99,19 +102,21 @@ function Function_for_fetching_Devops_feeds(){
                 for(var i = 0; i < len; i++){
                     Devops_model.find({"title" : item[i].title}, function(err,x){
                         if(err){
-                            var entry = new Devops_model({
-                                title : item[i].title,
-                                description : item[i].contentSnippet,
-                                date : item[i].pubDate,
-                                link : item[i].link,
-                                creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
-                                category : "devops"
-                            });
-                            entry.save(function(e){
-                                if(e) throw e;
-                                console.log("feeds added from devops.com");
-                            });                
+                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
+                                var entry = new Devops_model({
+                                    title : item[i].title,
+                                    description : item[i].contentSnippet,
+                                    date : item[i].pubDate,
+                                    link : item[i].link,
+                                    creator : item[i].creator,
+                                    media_url : "www.image.com/image.jpg",
+                                    category : "devops"
+                                });
+                                entry.save(function(e){
+                                    if(e) throw e;
+                                    console.log("feeds added from devops.com");
+                                });                
+                            }
                         }
                     });
                     
@@ -124,19 +129,21 @@ function Function_for_fetching_Devops_feeds(){
                 for(var i = 0; i < len; i++){
                     Devops_model.find({"title" : item[i].title}, function(err, x){
                         if(err){
-                            var entry = new Devops_model({
-                                title : item[i].title,
-                                description : item[i].contentSnippet,
-                                date : item[i].pubDate,
-                                link : item[i].link,
-                                creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
-                                category : "devops"
-                            });
-                            entry.save(function(e){
-                                if(e) throw e;
-                                console.log("feed added from devops guys");
-                            });
+                            if((Date.now() - Date.parse(item[i].pubDate)) < 604800000){
+                                var entry = new Devops_model({
+                                    title : item[i].title,
+                                    description : item[i].contentSnippet,
+                                    date : item[i].pubDate,
+                                    link : item[i].link,
+                                    creator : item[i].creator,
+                                    media_url : "www.image.com/image.jpg",
+                                    category : "devops"
+                                });
+                                entry.save(function(e){
+                                    if(e) throw e;
+                                    console.log("feed added from devops guys");
+                                });
+                            }
                         }
                     });
                         

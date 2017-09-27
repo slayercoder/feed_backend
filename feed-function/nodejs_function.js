@@ -57,8 +57,8 @@ function Function_for_fetching_Nodejs_feeds(){
             parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
+                var regex = /https:\/\/www.toptal.com\/nodejs/;
                 for(var i = 0; i < len; i++){
-                    var regex = /https:\/\/www.toptal.com\/nodejs/;
                     if(regex.test(item[i].link)){
                         Nodejs_model.find({"title" : item[i].title}, function(err, x){
                             if(err){
