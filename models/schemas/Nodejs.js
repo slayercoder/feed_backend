@@ -12,6 +12,6 @@ var Nodejs_schema = new Schema({
 });
 
 
-var Nodejs_model = mongoose.model("node", Nodejs_schema);
+var Nodejs_model = mongoose.model("nodes", Nodejs_schema, "nodejs");
 
 module.exports = Nodejs_model;

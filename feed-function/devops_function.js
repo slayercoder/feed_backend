@@ -7,7 +7,7 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://www.productplan.com/blog/feed/", function(err_parse,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
+                for(let i = 0; i < len; i++){
                     var entry = new Devops_model({
                         title : item[i].title,
                         description : item[i].content,
@@ -27,7 +27,7 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://devops.com/feed/", function(err_parse,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
+                for(let i = 0; i < len; i++){
                     var entry = new Devops_model({
                         title : item[i].title,
                         description : item[i].contentSnippet,
@@ -47,7 +47,7 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://www.devopsguys.com/blog/feed/", function(err_parse,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
+                for(let i = 0; i < len; i++){
                     var entry = new Devops_model({
                         title : item[i].title,
                         description : item[i].contentSnippet,
@@ -71,9 +71,9 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://www.productplan.com/blog/feed/", function(err_parse, parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err,x){
-                        if(err){
+                for(let i = 0; i < len; i++){
+                    Devops_model.find({"title" : item[i].title}, function(err,searchedItem){
+                        if(searchedItem.length === 0){
                             var entry = new Devops_model({
                                 title : item[i].title,
                                 description : item[i].content,
@@ -96,9 +96,9 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://devops.com/feed/", function(err_parse,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err,x){
-                        if(err){
+                for(let i = 0; i < len; i++){
+                    Devops_model.find({"title" : item[i].title}, function(err,searchedItem){
+                        if(searchedItem.length === 0){
                             var entry = new Devops_model({
                                 title : item[i].title,
                                 description : item[i].contentSnippet,
@@ -121,9 +121,9 @@ function Function_for_fetching_Devops_feeds(){
             parser.parseURL("https://www.devopsguys.com/blog/feed/", function(err_parse,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    Devops_model.find({"title" : item[i].title}, function(err, x){
-                        if(err){
+                for(let i = 0; i < len; i++){
+                    Devops_model.find({"title" : item[i].title}, function(err, searchedItem){
+                        if(searchedItem.length === 0){
                             var entry = new Devops_model({
                                 title : item[i].title,
                                 description : item[i].contentSnippet,
