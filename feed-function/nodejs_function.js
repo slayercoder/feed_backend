@@ -8,8 +8,8 @@ function Function_for_fetching_Nodejs_feeds(){
             parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
+                let regex = /https:\/\/www.toptal.com\/nodejs/;
                 for(let i = 0; i < len; i++){
-                    let regex = /https:\/\/www.toptal.com\/nodejs/;
                     if(regex.test(item[i].link)){
                         let entry = new Nodejs_model({
                             title : item[i].title,

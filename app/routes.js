@@ -32,10 +32,38 @@ router.get("/feeds/nodejs", function(req,res){
     });
 });
 
+router.post("/feeds/nodejs", function(req,res){
+    let len = req.body.data.length;
+    let selectedFeeds = req.body.data;
+    for(let i = 0; i < len; i++){
+        let selectedTitle = selectedFeeds[i].title;
+        Nodejs_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+            if(!err){
+                console.log("deleted");
+            }
+        });
+    }
+    res.send(req.body.data);
+});
+
 router.get("/feeds/devops", function(req,res){
     Devops_model.find({"category" : "devops"}, function(err, data){
         res.json(data);
     });
+});
+
+router.post("/feeds/devops", function(req,res){
+    let len = req.body.data.length;
+    let selectedFeeds = req.body.data;
+    for(let i = 0; i < len; i++){
+        let selectedTitle = selectedFeeds[i].title;
+        Devops_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+            if(!err){
+                console.log("deleted");
+            }
+        });
+    }
+    res.send(req.body.data);
 });
 
 router.get("/count", function(req,res){

@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const bodyParser = require("body-parser");
 const config = require('./models/config.js');
 const port = process.env.PORT || config.port;
 const router = require("./app/routes");
@@ -13,8 +14,8 @@ const parser = require("rss-parser");
 
 // mongoDB methods wrapper
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/appDb");
-const db = mongoose.connection;
+mongoose.connect(config.db_Url);
+const db = mongoose.connection; 
 
 // database connection
 db.on("error", function(){
@@ -27,6 +28,8 @@ db.once("open", function(){
 
 // application middlewares
 app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // for Cross Origin Resource Sharing issue (CORS)
 app.use(function(req,res,next){
