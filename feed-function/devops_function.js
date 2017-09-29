@@ -15,7 +15,9 @@ function Function_for_fetching_Devops_feeds(){
                         link : item[i].link,
                         creator : item[i].creator,
                         media_url : "www.image.com/image.jpg",
-                        category : "devops"
+                        category : "devops",
+                        archived : false,
+                        published : false
                     });
                     entry.save(function(e){
                         if(e) throw e;
@@ -35,7 +37,9 @@ function Function_for_fetching_Devops_feeds(){
                         link : item[i].link,
                         creator : item[i].creator,
                         media_url : "www.image.com/image.jpg",
-                        category : "devops"
+                        category : "devops",
+                        archived : false,
+                        published : false
                     });
                     entry.save(function(e){
                         if(e) throw e;
@@ -55,7 +59,9 @@ function Function_for_fetching_Devops_feeds(){
                         link : item[i].link,
                         creator : item[i].creator,
                         media_url : "www.image.com/image.jpg",
-                        category : "devops"
+                        category : "devops",
+                        archived : false,
+                        published : false
                     });
                     entry.save(function(e){
                         if(e) throw e;
@@ -81,7 +87,9 @@ function Function_for_fetching_Devops_feeds(){
                                 link : item[i].link,
                                 creator : item[i].creator,
                                 media_url : "www.image.com/image.jpg",
-                                category : "devops"
+                                category : "devops",
+                                archived : false,
+                                published : false
                             });
                             entry.save(function(e){
                                 if(e) throw e;

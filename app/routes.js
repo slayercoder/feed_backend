@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const Nodejs_model = require("../models/schemas/Nodejs");
 const Devops_model = require("../models/schemas/Devops");
+const Archived_model = require("../models/schemas/Archived");
 
 // categories function imports
 const Function_for_fetching_Nodejs_feeds = require("../feed-function/nodejs_function");
@@ -33,17 +34,33 @@ router.get("/feeds/nodejs", function(req,res){
 });
 
 router.post("/feeds/nodejs", function(req,res){
-    let len = req.body.data.length;
-    let selectedFeeds = req.body.data;
-    for(let i = 0; i < len; i++){
-        let selectedTitle = selectedFeeds[i].title;
-        Nodejs_model.findOneAndRemove({"title" : selectedTitle}, function(err){
-            if(!err){
-                console.log("deleted");
-            }
-        });
+    if(req.body.action === "delete"){
+        let len = req.body.data.length;
+        let selectedFeeds = req.body.data;
+        for(let i = 0; i < len; i++){
+            let selectedTitle = selectedFeeds[i].title;
+            Nodejs_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+                if(!err){
+                    console.log("deleted");
+                }
+            });
+        }
     }
-    res.send(req.body.data);
+    else if(req.body.action === "archive"){
+        let len = req.body.data.length;
+        let selectedFeeds = req.body.data;
+        for(let i = 0; i < len; i++){
+            let selectedTitle = selectedFeeds[i].title;
+            Nodejs_model.findOneAndUpdate({"title" : selectedTitle}, { $set : {"archived" : true}}, function(err,doc){
+                if(err){
+                    console.log("Something gone wrong!!");
+                }
+                else{
+                    console.log("updated succesfully");
+                }
+            });
+        }
+    }
 });
 
 router.get("/feeds/devops", function(req,res){
@@ -53,17 +70,35 @@ router.get("/feeds/devops", function(req,res){
 });
 
 router.post("/feeds/devops", function(req,res){
-    let len = req.body.data.length;
-    let selectedFeeds = req.body.data;
-    for(let i = 0; i < len; i++){
-        let selectedTitle = selectedFeeds[i].title;
-        Devops_model.findOneAndRemove({"title" : selectedTitle}, function(err){
-            if(!err){
-                console.log("deleted");
-            }
-        });
+    if(req.body.action === "delete"){
+        let len = req.body.data.length;
+        let selectedFeeds = req.body.data;
+        for(let i = 0; i < len; i++){
+            let selectedTitle = selectedFeeds[i].title;
+            Devops_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+                if(!err){
+                    console.log("deleted");
+                }
+            });
+        }
+        res.send(req.body.data);
     }
-    res.send(req.body.data);
+    else if(req.body.action === "archive"){
+        let len = req.body.data.length;
+        let selectedFeeds = req.body.data;
+        for(let i = 0; i < len; i++){
+            let selectedTitle = selectedFeeds[i].title;
+            Devops_model.findOneAndUpdate({"title" : selectedTitle}, { $set : {"archived" : true}}, function(err,doc){
+                if(err){
+                    console.log("Something gone wrong!!");
+                }
+                else{
+                    console.log("updated succesfully");
+                }
+            });
+        }
+    }
+
 });
 
 router.get("/count", function(req,res){
