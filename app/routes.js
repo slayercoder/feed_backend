@@ -3,32 +3,29 @@ const router = express.Router();
 const path = require("path");
 const Nodejs_model = require("../models/schemas/Nodejs");
 const Devops_model = require("../models/schemas/Devops");
-const Archived_model = require("../models/schemas/Archived");
+const feedSchemaModel = require("../models/schemas/FeedSchema");
 
 // categories function imports
-const Function_for_fetching_Nodejs_feeds = require("../feed-function/nodejs_function");
-const Function_for_fetching_Devops_feeds = require("../feed-function/devops_function");
+// const Function_for_fetching_Nodejs_feeds = require("../feed-function/nodejs_function");
+// const Function_for_fetching_Devops_feeds = require("../feed-function/devops_function");
+const FetchAllFeeds = require("../feed-function/fetchAllFeeds");
 
-
-
+// API endpoints GET / POST / PUT /DELETE
 router.get("/", function(req,res){
-    Function_for_fetching_Nodejs_feeds();
-    Function_for_fetching_Devops_feeds();
+    // Function_for_fetching_Nodejs_feeds();
+    // Function_for_fetching_Devops_feeds();
+    FetchAllFeeds();
 });
 
 router.get("/feeds",function(req,res){
     var feeds = [];
-    Nodejs_model.find({"category" : "nodejs"}, function(err, data){
-       feeds = feeds.concat(data);
-        Devops_model.find({"category" : "devops"}, function(err, data){
-            feeds = feeds.concat(data);
-            res.json(feeds)
-        });
+    feedSchemaModel.find({}, function(err, data){
+       res.json(data);
     });   
 });
 
 router.get("/feeds/nodejs", function(req,res){
-    Nodejs_model.find({"category" : "nodejs"}, function(err, data){
+    feedSchemaModel.find({"category" : "nodejs"}, function(err, data){
         res.json(data);
     });
 });
@@ -39,7 +36,7 @@ router.post("/feeds/nodejs", function(req,res){
         let selectedFeeds = req.body.data;
         for(let i = 0; i < len; i++){
             let selectedTitle = selectedFeeds[i].title;
-            Nodejs_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+            feedSchemaModel.findOneAndRemove({"title" : selectedTitle}, function(err){
                 if(!err){
                     console.log("deleted");
                 }
@@ -51,7 +48,7 @@ router.post("/feeds/nodejs", function(req,res){
         let selectedFeeds = req.body.data;
         for(let i = 0; i < len; i++){
             let selectedTitle = selectedFeeds[i].title;
-            Nodejs_model.findOneAndUpdate({"title" : selectedTitle}, { $set : {"archived" : true}}, function(err,doc){
+            feedSchemaModel.findOneAndUpdate({"title" : selectedTitle, "category" : "nodejs"}, { $set : {"archived" : true}}, function(err,doc){
                 if(err){
                     console.log("Something gone wrong!!");
                 }
@@ -64,7 +61,7 @@ router.post("/feeds/nodejs", function(req,res){
 });
 
 router.get("/feeds/devops", function(req,res){
-    Devops_model.find({"category" : "devops"}, function(err, data){
+    feedSchemaModel.find({"category" : "devops"}, function(err, data){
         res.json(data);
     });
 });
@@ -75,7 +72,7 @@ router.post("/feeds/devops", function(req,res){
         let selectedFeeds = req.body.data;
         for(let i = 0; i < len; i++){
             let selectedTitle = selectedFeeds[i].title;
-            Devops_model.findOneAndRemove({"title" : selectedTitle}, function(err){
+            feedSchemaModel.findOneAndRemove({"title" : selectedTitle}, function(err){
                 if(!err){
                     console.log("deleted");
                 }
@@ -88,7 +85,7 @@ router.post("/feeds/devops", function(req,res){
         let selectedFeeds = req.body.data;
         for(let i = 0; i < len; i++){
             let selectedTitle = selectedFeeds[i].title;
-            Devops_model.findOneAndUpdate({"title" : selectedTitle}, { $set : {"archived" : true}}, function(err,doc){
+            feedSchemaModel.findOneAndUpdate({"title" : selectedTitle, "category" : "devops"}, { $set : {"archived" : true}}, function(err,doc){
                 if(err){
                     console.log("Something gone wrong!!");
                 }
@@ -102,13 +99,15 @@ router.post("/feeds/devops", function(req,res){
 });
 
 router.get("/count", function(req,res){
-    var total = 0;
-    Nodejs_model.count({}, function(err,cnt){
-        total += cnt;
-        Devops_model.count({}, function(err,cnt){
-            total += cnt;
-            res.json(total);
-        });
+    feedSchemaModel.count({}, function(err,total){
+        res.json(total);
+    });
+});
+
+
+router.get("/feeds/archived", function(req,res){
+    feedSchemaModel.find({"archived" : true}, function(err, data){
+        res.json(data);
     });
 });
 
