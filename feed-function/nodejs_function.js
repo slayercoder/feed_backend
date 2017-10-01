@@ -8,17 +8,19 @@ function Function_for_fetching_Nodejs_feeds(){
             parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    var regex = /https:\/\/www.toptal.com\/nodejs/;
+                let regex = /https:\/\/www.toptal.com\/nodejs/;
+                for(let i = 0; i < len; i++){
                     if(regex.test(item[i].link)){
-                        var entry = new Nodejs_model({
+                        let entry = new Nodejs_model({
                             title : item[i].title,
                             description : item[i].content,
                             date : item[i].pubDate,
                             link : item[i].link,
                             creator : item[i].creator,
                             media_url : "www.image.com/image.jpg",
-                            category : "nodejs"
+                            category : "nodejs",
+                            archived : false,
+                            published : false
                         });
                         entry.save(function(e){
                             if(e) throw e;
@@ -31,15 +33,17 @@ function Function_for_fetching_Nodejs_feeds(){
             parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){                            
-                        var entry = new Nodejs_model({
+                for(let i = 0; i < len; i++){                            
+                        let entry = new Nodejs_model({
                         title : item[i].title,
                         description : item[i].content,
                         date : item[i].pubDate,
                         link : item[i].link,
                         creator : item[i].creator,
                         media_url : "www.image.com/image.jpg",
-                        category : "nodejs"
+                        category : "nodejs",
+                        archived : false,
+                        published : false
                     });
     
                     entry.save(function(e){
@@ -52,24 +56,27 @@ function Function_for_fetching_Nodejs_feeds(){
         }
         
     
-        else{
+        else{   
             // conditional code will be running which will prevent duplicate entry of feeds from rss feeds
             parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    var regex = /https:\/\/www.toptal.com\/nodejs/;
+                var regex = /https:\/\/www.toptal.com\/nodejs/;
+                for(let i = 0; i < len; i++){
                     if(regex.test(item[i].link)){
-                        Nodejs_model.find({"title" : item[i].title}, function(err, x){
-                            if(err){
-                                var entry = new Nodejs_model({
+                        let titleName = item[i].title;
+                        Nodejs_model.find({"title" : titleName}, function(err, searchedItem){
+                            if(searchedItem.length === 0){
+                                let entry = new Nodejs_model({
                                     title : item[i].title,
                                     description : item[i].content,
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
                                     media_url : "www.image.com/image.jpg",
-                                    category : "nodejs"
+                                    category : "nodejs",
+                                    archived : false,
+                                    published : false
                                 });
                                 entry.save(function(e){
                                     if(e) throw e;
@@ -84,17 +91,20 @@ function Function_for_fetching_Nodejs_feeds(){
             parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
                 var len = parsed.feed.entries.length;
                 var item = parsed.feed.entries;
-                for(var i = 0; i < len; i++){
-                    Nodejs_model.find({"title" : item[i].title}, function(err,x){
-                        if(err){
-                            var entry = new Nodejs_model({
+                for(let i = 0; i < len; i++){
+                    let titleName = item[i].title;
+                    Nodejs_model.find({"title" : titleName}, function(err,searchedItem){
+                        if(searchedItem.length === 0){
+                            let entry = new Nodejs_model({
                                 title : item[i].title,
                                 description : item[i].content,
                                 date : item[i].pubDate,
                                 link : item[i].link,
                                 creator : item[i].creator,
                                 media_url : "www.image.com/image.jpg",
-                                category : "nodejs"
+                                category : "nodejs",
+                                archived : false,
+                                published : false
                             });
         
                             entry.save(function(e){

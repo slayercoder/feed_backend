@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var Nodejs_schema = new Schema({
+var Archived_Schema = new Schema({
     title : {type : String, required : true },
     description : {type : String, required : true},
     date : {type : Date},
@@ -13,7 +13,6 @@ var Nodejs_schema = new Schema({
     published : {type : Boolean, required : true}
 });
 
+var Archived_model = mongoose.model("archive", Archived_Schema);
 
-var Nodejs_model = mongoose.model("nodes", Nodejs_schema, "nodejs");
-
-module.exports = Nodejs_model;
+module.exports = Archived_model;
