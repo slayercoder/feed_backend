@@ -28,7 +28,7 @@ router.get("/feeds",function(req,res){
 });
 
 router.get("/search",function(req,res){
-      console.log(req.params)
+      console.log(req.body)
 })
 
 router.get("/feeds/nodejs", function(req,res){
