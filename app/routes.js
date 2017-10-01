@@ -26,6 +26,10 @@ router.get("/feeds",function(req,res){
     });   
 });
 
+router.get("/search",function(req,res){
+      console.log(req.params)
+})
+
 router.get("/feeds/nodejs", function(req,res){
     Nodejs_model.find({"category" : "nodejs"}, function(err, data){
         res.json(data);
