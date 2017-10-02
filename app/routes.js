@@ -40,31 +40,41 @@ router.get("/feeds/nodejs", function(req,res){
 
 router.post("/feeds/nodejs", function(req,res){
     if(req.body.action === "delete"){
-        let len = req.body.data.length;
-        let selectedFeeds = req.body.data;
-        for(let i = 0; i < len; i++){
-            let selectedTitle = selectedFeeds[i].title;
-            feedSchemaModel.findOneAndRemove({"title" : selectedTitle}, function(err){
-                if(!err){
-                    console.log("deleted");
-                }
-            });
-        }
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndRemove(_id, function(err){
+            if(err){
+                console.log("deleted");
+            }
+            else{
+                console.log("deleted successfully");
+            }
+        });
+        console.log(req.body);
     }
     else if(req.body.action === "archive"){
-        let len = req.body.data.length;
-        let selectedFeeds = req.body.data;
-        for(let i = 0; i < len; i++){
-            let selectedTitle = selectedFeeds[i].title;
-            feedSchemaModel.findOneAndUpdate({"title" : selectedTitle, "category" : "nodejs"}, { $set : {"archived" : true}}, function(err,doc){
-                if(err){
-                    console.log("Something gone wrong!!");
-                }
-                else{
-                    console.log("updated succesfully");
-                }
-            });
-        }
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"archived" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("archived succesfully");
+            }
+        });
+        console.log(req.body);
+    }
+
+    else{
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"published" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("published succesfully");
+            }
+        });
+        console.log(req.body);
     }
 });
 
@@ -76,17 +86,12 @@ router.get("/feeds/devops", function(req,res){
 
 router.post("/feeds/devops", function(req,res){
     if(req.body.action === "delete"){
-        let len = req.body.data.length;
-        let selectedFeeds = req.body.data;
-        for(let i = 0; i < len; i++){
-            let selectedTitle = selectedFeeds[i].title;
-            feedSchemaModel.findOneAndRemove({"title" : selectedTitle}, function(err){
-                if(!err){
-                    console.log("deleted");
-                }
-            });
-        }
-        res.send(req.body.data);
+        let _id = req.body._id;
+        feedSchemaModel.findOneAndRemove({"_id" : _id}, function(err){
+            if(!err){
+                console.log("deleted");
+            }
+        });
     }
     else if(req.body.action === "archive"){
         let len = req.body.data.length;
