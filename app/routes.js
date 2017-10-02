@@ -18,10 +18,48 @@ router.get("/", function(req,res){
 });
 
 router.get("/feeds",function(req,res){
-    feedSchemaModel.find({}).sort({"date" : -1}).exec(function(err, data){
+    feedSchemaModel.find({"published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){
        res.json(data);
     });   
 });
+
+router.post("/feeds", function(req,res){
+    if(req.body.action === "delete"){
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndRemove(_id, function(err){
+            if(err){
+                console.log("something gone wrong");
+            }
+            else{
+                console.log("deleted successfully");
+            }
+        });
+    }
+    else if(req.body.action === "archive"){
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"archived" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("archived succesfully");
+            }
+        });
+    }
+
+    else{
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"published" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("published succesfully");
+            }
+        });
+    }
+});
+
 
 router.get("/search",function(req,res){
       feedSchemaModel.find({
@@ -33,12 +71,55 @@ router.get("/search",function(req,res){
 })
 
 router.get("/feeds/nodejs", function(req,res){
-    feedSchemaModel.find({"category" : "nodejs"}).sort({"date" : -1}).exec(function(err, data){
+    feedSchemaModel.find({"category" : "nodejs","published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);
     });
 });
 
 router.post("/feeds/nodejs", function(req,res){
+    if(req.body.action === "delete"){
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndRemove(_id, function(err){
+            if(err){
+                console.log("Some thing gone wrong");
+            }
+            else{
+                console.log("deleted successfully");
+            }
+        });
+    }
+    else if(req.body.action === "archive"){
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"archived" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("archived succesfully");
+            }
+        });
+    }
+
+    else if(req.body.action === "publish"){
+        let _id = req.body.feedObjectId;
+        feedSchemaModel.findByIdAndUpdate(_id, { $set : {"published" : true}}, function(err,doc){
+            if(err){
+                console.log("Something gone wrong!!");
+            }
+            else{
+                console.log("published succesfully");
+            }
+        });
+    }
+});
+
+router.get("/feeds/devops", function(req,res){
+    feedSchemaModel.find({"category" : "devops","published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){
+        res.json(data);
+    });
+});
+
+router.post("/feeds/devops", function(req,res){
     if(req.body.action === "delete"){
         let _id = req.body.feedObjectId;
         feedSchemaModel.findByIdAndRemove(_id, function(err){
@@ -64,7 +145,7 @@ router.post("/feeds/nodejs", function(req,res){
         console.log(req.body);
     }
 
-    else{
+    else if(req.body.action === "publish"){
         let _id = req.body.feedObjectId;
         feedSchemaModel.findByIdAndUpdate(_id, { $set : {"published" : true}}, function(err,doc){
             if(err){
@@ -75,38 +156,6 @@ router.post("/feeds/nodejs", function(req,res){
             }
         });
         console.log(req.body);
-    }
-});
-
-router.get("/feeds/devops", function(req,res){
-    feedSchemaModel.find({"category" : "devops"}).sort({"date" : -1}).exec(function(err, data){
-        res.json(data);
-    });
-});
-
-router.post("/feeds/devops", function(req,res){
-    if(req.body.action === "delete"){
-        let _id = req.body._id;
-        feedSchemaModel.findOneAndRemove({"_id" : _id}, function(err){
-            if(!err){
-                console.log("deleted");
-            }
-        });
-    }
-    else if(req.body.action === "archive"){
-        let len = req.body.data.length;
-        let selectedFeeds = req.body.data;
-        for(let i = 0; i < len; i++){
-            let selectedTitle = selectedFeeds[i].title;
-            feedSchemaModel.findOneAndUpdate({"title" : selectedTitle, "category" : "devops"}, { $set : {"archived" : true}}, function(err,doc){
-                if(err){
-                    console.log("Something gone wrong!!");
-                }
-                else{
-                    console.log("updated succesfully");
-                }
-            });
-        }
     }
 
 });
