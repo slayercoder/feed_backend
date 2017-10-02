@@ -18,7 +18,7 @@ router.get("/", function(req,res){
 });
 
 router.get("/feeds",function(req,res){
-    feedSchemaModel.find({}, function(err, data){
+    feedSchemaModel.find({}).sort({"date" : -1}).exec(function(err, data){
        res.json(data);
     });   
 });
@@ -33,7 +33,7 @@ router.get("/search",function(req,res){
 })
 
 router.get("/feeds/nodejs", function(req,res){
-    feedSchemaModel.find({"category" : "nodejs"}, function(err, data){
+    feedSchemaModel.find({"category" : "nodejs"}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);
     });
 });
@@ -69,7 +69,7 @@ router.post("/feeds/nodejs", function(req,res){
 });
 
 router.get("/feeds/devops", function(req,res){
-    feedSchemaModel.find({"category" : "devops"}, function(err, data){
+    feedSchemaModel.find({"category" : "devops"}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);
     });
 });
@@ -114,11 +114,20 @@ router.get("/count", function(req,res){
 
 
 router.get("/feeds/archived", function(req,res){
-    feedSchemaModel.find({"archived" : true}, function(err, data){
+    feedSchemaModel.find({"archived" : true}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);
     });
 });
 
+
+
+//////////// publishing API routes/////////////
+
+router.get("/feeds/archived/nodejs", function(req,res){
+    feedSchemaModel.find({"category" : "nodejs", "archived" : true}).sort({"date" : -1}).exec(function(err, data){
+        res.json(data);
+    });
+});
 
 
 
