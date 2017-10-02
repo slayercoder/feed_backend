@@ -18,14 +18,18 @@ router.get("/", function(req,res){
 });
 
 router.get("/feeds",function(req,res){
-    var feeds = [];
     feedSchemaModel.find({}, function(err, data){
        res.json(data);
     });   
 });
 
 router.get("/search",function(req,res){
-      console.log(req.body)
+      feedSchemaModel.find({
+        $text: {$search: req.query.q}
+        
+          }, function(err, data){
+          res.json(data);
+    });
 })
 
 router.get("/feeds/nodejs", function(req,res){

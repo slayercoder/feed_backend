@@ -13,6 +13,8 @@ var feedSchema = new Schema({
     published : {type : Boolean, required : true}
 });
 
+feedSchema.index({'$**': 'text'});
+
 var feedSchemaModel = mongoose.model("feed",feedSchema);
 
 module.exports = feedSchemaModel;
