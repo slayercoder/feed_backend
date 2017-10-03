@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const textSearch = require('mongoose-text-search');
 const Schema = mongoose.Schema;
 
 var feedSchema = new Schema({
@@ -13,6 +14,7 @@ var feedSchema = new Schema({
     published : {type : Boolean, required : true}
 });
 
+feedSchema.plugin(textSearch);
 feedSchema.index({'$**': 'text'});
 
 var feedSchemaModel = mongoose.model("feed",feedSchema);
