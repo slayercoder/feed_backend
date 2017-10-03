@@ -62,13 +62,15 @@ router.post("/feeds", function(req,res){
 
 
 router.get("/search",function(req,res){
-      feedSchemaModel.find({
-        $text: {$search: req.query.q}
-        
-          }, function(err, data){
-          res.json(data);
+      feedSchemaModel.find(
+          {$text: {$search: req.query.q}},
+        { score : { $meta: "textScore" } }
+      ).sort({ score : { $meta : 'textScore' } }
+      ).exec(function(err, data){
+        res.json(data);
     });
-})
+        
+});
 
 router.get("/feeds/nodejs", function(req,res){
     feedSchemaModel.find({"category" : "nodejs","published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){
