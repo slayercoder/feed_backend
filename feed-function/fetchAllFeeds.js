@@ -17,7 +17,6 @@ function FetchAllFeeds(){
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
                                     category : "nodejs",
                                     archived : false,
                                     published : false
@@ -42,7 +41,6 @@ function FetchAllFeeds(){
                                 date : item[i].pubDate,
                                 link : item[i].link,
                                 creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
                                 category : "nodejs",
                                 archived : false,
                                 published : false
@@ -68,7 +66,6 @@ function FetchAllFeeds(){
                                 date : item[i].pubDate,
                                 link : item[i].link,
                                 creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
                                 category : "devops",
                                 archived : false,
                                 published : false
@@ -93,7 +90,6 @@ function FetchAllFeeds(){
                             date : item[i].pubDate,
                             link : item[i].link,
                             creator : item[i].creator,
-                            media_url : "www.image.com/image.jpg",
                             category : "devops",
                             archived : false,
                             published : false
@@ -118,7 +114,6 @@ function FetchAllFeeds(){
                             date : item[i].pubDate,
                             link : item[i].link,
                             creator : item[i].creator,
-                            media_url : "www.image.com/image.jpg",
                             category : "devops",
                             archived : false,
                             published : false
@@ -150,7 +145,6 @@ function FetchAllFeeds(){
                                         date : item[i].pubDate,
                                         link : item[i].link,
                                         creator : item[i].creator,
-                                        media_url : "www.image.com/image.jpg",
                                         category : "nodejs",
                                         archived : false,
                                         published : false
@@ -180,7 +174,6 @@ function FetchAllFeeds(){
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
                                     category : "nodejs",
                                     archived : false,
                                     published : false
@@ -209,7 +202,6 @@ function FetchAllFeeds(){
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
                                     category : "devops",
                                     archived : false,
                                     published : false
@@ -237,7 +229,6 @@ function FetchAllFeeds(){
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
                                     category : "devops",
                                     archived : false,
                                     published : false
@@ -265,7 +256,6 @@ function FetchAllFeeds(){
                                     date : item[i].pubDate,
                                     link : item[i].link,
                                     creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
                                     category : "devops",
                                     archived : false,
                                     published : false

@@ -10,7 +10,8 @@ const feedSchemaModel = require("../models/schemas/FeedSchema");
 // const Function_for_fetching_Devops_feeds = require("../feed-function/devops_function");
 const FetchAllFeeds = require("../feed-function/fetchAllFeeds");
 
-// API endpoints GET / POST / PUT /DELETE
+////////////////////////// API endpoints GET / POST / PUT /DELETE////////////////////
+
 router.get("/", function(req,res){
     // Function_for_fetching_Nodejs_feeds();
     // Function_for_fetching_Devops_feeds();
@@ -179,9 +180,16 @@ router.get("/feeds/archived", function(req,res){
 
 //////////// publishing API routes/////////////
 
-router.get("/feeds/archived/nodejs", function(req,res){
-    feedSchemaModel.find({"category" : "nodejs", "archived" : true}).sort({"date" : -1}).exec(function(err, data){
+router.get("/feeds/published/nodejs", function(req,res){
+    feedSchemaModel.find({"category" : "nodejs", "published" : true}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);
+    });
+});
+
+
+router.get("/feeds/published/devops", function(req,res){
+    feedSchemaModel.find({"category" : "devops", "published" : true}).sort({"date" : -1}).exec(function(err, data){
+        res.json(data);        
     });
 });
 
