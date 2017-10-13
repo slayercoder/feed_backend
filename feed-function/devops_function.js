@@ -1,7 +1,7 @@
 const parser = require("rss-parser");
 const feedSchemaModel = require("../models/schemas/FeedSchema");
 
-var devopsFunctionWhenDbisEmpty = [
+var devopsFunctionWhenDbIsEmpty = [
     function(){
         parser.parseURL("https://devops.com/feed/", function(err_parse,parsed){
             let len = parsed.feed.entries.length;
@@ -25,7 +25,7 @@ var devopsFunctionWhenDbisEmpty = [
         });
     },
     function(){
-        parser.parseURL("https://www.productplan.com/blog/feed/", function(err_parse,parsed){
+        parser.parseURL("https://www.productplan.com/blog/feed/", function(err_parse, parsed){
             let len = parsed.feed.entries.length;
             let item = parsed.feed.entries;
             for(let i = 0; i < len; i++){
@@ -70,7 +70,7 @@ var devopsFunctionWhenDbisEmpty = [
     }
 ];
 
-var devopsFunctionWhenDbisNotEmpty = [
+var devopsFunctionWhenDbIsNotEmpty = [
     function(){
         parser.parseURL("https://www.productplan.com/blog/feed/", function(err_parse, parsed){
             let len = parsed.feed.entries.length;
@@ -157,6 +157,6 @@ var devopsFunctionWhenDbisNotEmpty = [
 
 
 module.exports = {
-    devopsFunctionWhenDbisEmpty : devopsFunctionWhenDbisEmpty,
-    devopsFunctionWhenDbisNotEmpty : devopsFunctionWhenDbisNotEmpty
+    devopsFunctionWhenDbIsEmpty : devopsFunctionWhenDbIsEmpty,
+    devopsFunctionWhenDbIsNotEmpty : devopsFunctionWhenDbIsNotEmpty
 };

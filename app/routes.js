@@ -12,11 +12,14 @@ const FetchAllFeeds = require("../feed-function/fetchAllFeeds");
 
 ////////////////////////// API endpoints GET / POST / PUT /DELETE////////////////////
 
-router.get("/", function(req,res){
-    // Function_for_fetching_Nodejs_feeds();
-    // Function_for_fetching_Devops_feeds();
+// setInterval(function(){
+//     FetchAllFeeds();
+// }, 604800000);
+    
+route.get("/", function(req, res){
     FetchAllFeeds();
 });
+
 
 router.get("/feeds",function(req,res){
     feedSchemaModel.find({"published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){

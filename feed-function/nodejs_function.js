@@ -1,9 +1,9 @@
 const parser = require("rss-parser");
 const feedSchemaModel = require("../models/schemas/FeedSchema");
 
-var nodejsFunctionWhenDbIsempty = [
+var nodejsFunctionWhenDbIsEmpty = [
     function(){
-        parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
+        parser.parseURL("https://www.toptal.com/blog.rss", function(error,parsed){
             let len = parsed.feed.entries.length;
             let item = parsed.feed.entries;
             let regex = /https:\/\/www.toptal.com\/nodejs/;
@@ -57,7 +57,7 @@ var nodejsFunctionWhenDbIsempty = [
 
 var nodejsFunctionWhenDbIsNotEmpty = [
     function(){
-        parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
+        parser.parseURL("https://www.toptal.com/blog.rss", function(error,parsed){
             let len = parsed.feed.entries.length;
             let item = parsed.feed.entries;
             let regex = /https:\/\/www.toptal.com\/nodejs/;
@@ -118,6 +118,6 @@ var nodejsFunctionWhenDbIsNotEmpty = [
 ];
 
 module.exports = {
-    nodejsFunctionWhenDbIsempty : nodejsFunctionWhenDbIsempty,
+    nodejsFunctionWhenDbIsEmpty : nodejsFunctionWhenDbIsEmpty,
     nodejsFunctionWhenDbIsNotEmpty : nodejsFunctionWhenDbIsNotEmpty
 };
