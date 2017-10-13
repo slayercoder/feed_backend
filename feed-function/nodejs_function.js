@@ -1,124 +1,123 @@
-const Nodejs_model = require("../models/schemas/Nodejs");
 const parser = require("rss-parser");
+const feedSchemaModel = require("../models/schemas/FeedSchema");
 
-function Function_for_fetching_Nodejs_feeds(){
-    Nodejs_model.count({}, function(err,num){
-        if(num === 0){
-            // series of code to be run in sequence so that feeds from  different sources are stored in DB
-            parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
-                var len = parsed.feed.entries.length;
-                var item = parsed.feed.entries;
-                let regex = /https:\/\/www.toptal.com\/nodejs/;
-                for(let i = 0; i < len; i++){
-                    if(regex.test(item[i].link)){
-                        let entry = new Nodejs_model({
-                            title : item[i].title,
-                            description : item[i].content,
-                            date : item[i].pubDate,
-                            link : item[i].link,
-                            creator : item[i].creator,
-                            media_url : "www.image.com/image.jpg",
-                            category : "nodejs",
-                            archived : false,
-                            published : false
-                        });
-                        entry.save(function(e){
-                            if(e) throw e;
-                            console.log("feed added from toptal");
-                        });
-                    }
-                }
-            });
-    
-            parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
-                var len = parsed.feed.entries.length;
-                var item = parsed.feed.entries;
-                for(let i = 0; i < len; i++){                            
-                        let entry = new Nodejs_model({
+var nodejsFunctionWhenDbIsempty = [
+    function(){
+        parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
+            let len = parsed.feed.entries.length;
+            let item = parsed.feed.entries;
+            let regex = /https:\/\/www.toptal.com\/nodejs/;
+            for(let i = 0; i < len; i++){
+                if(regex.test(item[i].link)){
+                    let entry = new feedSchemaModel({
                         title : item[i].title,
                         description : item[i].content,
                         date : item[i].pubDate,
                         link : item[i].link,
                         creator : item[i].creator,
-                        media_url : "www.image.com/image.jpg",
                         category : "nodejs",
                         archived : false,
                         published : false
                     });
-    
                     entry.save(function(e){
                         if(e) throw e;
-                        console.log("feed added from nodesource");
+                        console.log("feed added from toptal");
                     });
-                
                 }
-            });
-        }
-        
-    
-        else{   
-            // conditional code will be running which will prevent duplicate entry of feeds from rss feeds
-            parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
-                var len = parsed.feed.entries.length;
-                var item = parsed.feed.entries;
-                var regex = /https:\/\/www.toptal.com\/nodejs/;
-                for(let i = 0; i < len; i++){
-                    if(regex.test(item[i].link)){
-                        let titleName = item[i].title;
-                        Nodejs_model.find({"title" : titleName}, function(err, searchedItem){
-                            if(searchedItem.length === 0){
-                                let entry = new Nodejs_model({
-                                    title : item[i].title,
-                                    description : item[i].content,
-                                    date : item[i].pubDate,
-                                    link : item[i].link,
-                                    creator : item[i].creator,
-                                    media_url : "www.image.com/image.jpg",
-                                    category : "nodejs",
-                                    archived : false,
-                                    published : false
-                                });
-                                entry.save(function(e){
-                                    if(e) throw e;
-                                    console.log("feed added from toptal");
-                                });
-                            }
-                        });
-                    }
-                }
-            });
+            }
+        });
+    },
+    function(){
+        parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
+            let len = parsed.feed.entries.length;
+            let item = parsed.feed.entries;
+            for(let i = 0; i < len; i++){                            
+                    let entry = new feedSchemaModel({
+                    title : item[i].title,
+                    description : item[i].content,
+                    date : item[i].pubDate,
+                    link : item[i].link,
+                    creator : item[i].creator,
+                    category : "nodejs",
+                    archived : false,
+                    published : false
+                });
+
+                entry.save(function(e){
+                    if(e) throw e;
+                    console.log("feed added from nodesource");
+                });
             
-            parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
-                var len = parsed.feed.entries.length;
-                var item = parsed.feed.entries;
-                for(let i = 0; i < len; i++){
+            }
+        });
+    } 
+];
+
+/////////////////////////////
+
+var nodejsFunctionWhenDbIsNotEmpty = [
+    function(){
+        parser.parseURL("http://www.toptal.com/blog.rss", function(error,parsed){
+            let len = parsed.feed.entries.length;
+            let item = parsed.feed.entries;
+            let regex = /https:\/\/www.toptal.com\/nodejs/;
+            for(let i = 0; i < len; i++){
+                if(regex.test(item[i].link)){
                     let titleName = item[i].title;
-                    Nodejs_model.find({"title" : titleName}, function(err,searchedItem){
+                    feedSchemaModel.find({"title" : titleName}, function(err, searchedItem){
                         if(searchedItem.length === 0){
-                            let entry = new Nodejs_model({
+                            let entry = new feedSchemaModel({
                                 title : item[i].title,
                                 description : item[i].content,
                                 date : item[i].pubDate,
                                 link : item[i].link,
                                 creator : item[i].creator,
-                                media_url : "www.image.com/image.jpg",
                                 category : "nodejs",
                                 archived : false,
                                 published : false
                             });
-        
                             entry.save(function(e){
                                 if(e) throw e;
-                                console.log("feed added from nodesource");
+                                console.log("feed added from toptal");
                             });
                         }
-                    });                            
+                    });
                 }
-            });
-        
-        }
-    });
-    
-}
+            }
+        });
+    },
 
-module.exports = Function_for_fetching_Nodejs_feeds;
+    function(){
+        parser.parseURL("https://nodesource.com/blog/rss", function(error,parsed){       
+            let len = parsed.feed.entries.length;
+            let item = parsed.feed.entries;
+            for(let i = 0; i < len; i++){
+                let titleName = item[i].title;
+                feedSchemaModel.find({"title" : titleName}, function(err,searchedItem){
+                    if(searchedItem.length === 0){
+                        let entry = new feedSchemaModel({
+                            title : item[i].title,
+                            description : item[i].content,
+                            date : item[i].pubDate,
+                            link : item[i].link,
+                            creator : item[i].creator,
+                            category : "nodejs",
+                            archived : false,
+                            published : false
+                        });
+    
+                        entry.save(function(e){
+                            if(e) throw e;
+                            console.log("feed added from nodesource");
+                        });
+                    }
+                });                            
+            }
+        });
+    }
+];
+
+module.exports = {
+    nodejsFunctionWhenDbIsempty : nodejsFunctionWhenDbIsempty,
+    nodejsFunctionWhenDbIsNotEmpty : nodejsFunctionWhenDbIsNotEmpty
+};
