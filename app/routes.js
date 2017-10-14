@@ -16,7 +16,7 @@ const FetchAllFeeds = require("../feed-function/fetchAllFeeds");
 //     FetchAllFeeds();
 // }, 604800000);
     
-route.get("/", function(req, res){
+router.get("/", function(req, res){
     FetchAllFeeds();
 });
 
@@ -166,6 +166,13 @@ router.post("/feeds/devops", function(req,res){
 
 });
 
+router.get("/feeds/product", function(req, res){
+    feedSchemaModel.find({"category" : "product", "published" : false, "archived" : false}).sort({"date" : -1}).exec(function(err, data){
+        res.json(data);
+    });
+});
+
+
 router.get("/count", function(req,res){
     feedSchemaModel.count({}, function(err,total){
         res.json(total);
@@ -181,7 +188,7 @@ router.get("/feeds/archived", function(req,res){
 
 
 
-//////////// publishing API routes/////////////
+//////////// published API routes/////////////
 
 router.get("/feeds/published/nodejs", function(req,res){
     feedSchemaModel.find({"category" : "nodejs", "published" : true}).sort({"date" : -1}).exec(function(err, data){
@@ -193,6 +200,12 @@ router.get("/feeds/published/nodejs", function(req,res){
 router.get("/feeds/published/devops", function(req,res){
     feedSchemaModel.find({"category" : "devops", "published" : true}).sort({"date" : -1}).exec(function(err, data){
         res.json(data);        
+    });
+});
+
+router.get("/feeds/published/product", function(req, res){
+    feedSchemaModel.find({"category" : "product", "published" : true}).sort({"date" : -1}).exec(function(err, data){
+        res.json(data);
     });
 });
 
