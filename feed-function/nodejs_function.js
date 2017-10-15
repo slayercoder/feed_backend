@@ -11,7 +11,7 @@ var nodejsFunctionWhenDbIsEmpty = [
                 if(regex.test(item[i].link)){
                     let entry = new feedSchemaModel({
                         title : item[i].title,
-                        description : item[i].content,
+                        description : item[i].contentSnippet,
                         date : item[i].pubDate,
                         link : item[i].link,
                         creator : item[i].creator,
@@ -34,7 +34,7 @@ var nodejsFunctionWhenDbIsEmpty = [
             for(let i = 0; i < len; i++){                            
                     let entry = new feedSchemaModel({
                     title : item[i].title,
-                    description : item[i].content,
+                    description : item[i].contentSnippet,
                     date : item[i].pubDate,
                     link : item[i].link,
                     creator : item[i].creator,
@@ -68,7 +68,7 @@ var nodejsFunctionWhenDbIsNotEmpty = [
                         if(searchedItem.length === 0){
                             let entry = new feedSchemaModel({
                                 title : item[i].title,
-                                description : item[i].content,
+                                description : item[i].contentSnippet,
                                 date : item[i].pubDate,
                                 link : item[i].link,
                                 creator : item[i].creator,
@@ -97,7 +97,7 @@ var nodejsFunctionWhenDbIsNotEmpty = [
                     if(searchedItem.length === 0){
                         let entry = new feedSchemaModel({
                             title : item[i].title,
-                            description : item[i].content,
+                            description : item[i].contentSnippet,
                             date : item[i].pubDate,
                             link : item[i].link,
                             creator : item[i].creator,
