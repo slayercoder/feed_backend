@@ -7,7 +7,6 @@ const engineeringFunction = require("./engineering_function");
 const designFunction = require("./design_function");
 
     function FetchAllFeeds(){
-
         // Number of sources for each category when 
         var nodejsFunctionCount = nodejsFunction.nodejsFunctionWhenDbIsEmpty.length;
         var devopsFunctionCount = devopsFunction.devopsFunctionWhenDbIsEmpty.length;
@@ -31,11 +30,11 @@ const designFunction = require("./design_function");
                     }
 
                     for(let i = 0; i < engineeringFunctionCount; i++){
-                        (engineeringFunctionWhenDbIsEmpty[i])();
+                        (engineeringFunction.engineeringFunctionWhenDbIsEmpty[i])();
                     }
                     
                     for(let i = 0; i < designFunctionCount; i++){
-                        (designFunctionWhenDbIsEmpty[i])();
+                        (designFunction.designFunctionWhenDbIsEmpty[i])();
                     }
                 }
             ///// below code runs for successive intervals 
