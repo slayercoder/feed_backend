@@ -58,7 +58,7 @@ var productFunctionWhenDbIsNotEmpty = [
                     if(searchedItem.length === 0){
                         var entry = new feedSchemaModel({
                             title : item[i].title,
-                            description : item[i].content,
+                            description : item[i].contentSnippet,
                             date : item[i].pubDate,
                             link : item[i].link,
                             creator : item[i].creator,
